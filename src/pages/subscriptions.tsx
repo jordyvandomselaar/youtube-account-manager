@@ -1,30 +1,39 @@
 import React, {FC} from "react";
+import useSWR from "swr";
 import {GetServerSideProps} from "next";
-import {getAuthenticatedOAuth2Client} from "../services/backend/oauth";
-const google = require("googleapis")
+import fetcher from "../services/shared/fetcher";
 
 export interface SubscriptionsProps {
 
 }
 
 export const getServerSideProps: GetServerSideProps = async context => {
-    const client = getAuthenticatedOAuth2Client(context.req.headers.cookie);
-    const list = await google.youtube_v3.Resource$Subscriptions.list(
-        {
-            auth: client,
-            mine: true
-        }
-    )
-
-    console.log(list);
-
-
-    return {props: {}}
+    return {
+        props: {}
+    }
 }
 
 const Subscriptions: FC<SubscriptionsProps> = () => {
+    const {data, error} = useSWR<{
+        items: {
+            id: string;
+            snippet: {
+                title: string;
+            }
+        }[]
+    }>("/api/subscriptions", fetcher);
+
+    if(error) {
+        return <p>Something went wrong</p>
+    }
+
+
     return (
-        <p>hi!</p>
+        <ul>
+            { data ? data.items.map(subscription => (
+                <li key={subscription.id}>{subscription.snippet.title}</li>
+            )) : <p>Loading…</p>}
+        </ul>
     );
 };
 

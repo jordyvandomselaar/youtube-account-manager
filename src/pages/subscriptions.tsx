@@ -98,7 +98,7 @@ ${names.join(',\n')}?
             fetch("/api/subscriptions/delete", {
                 method: "POST",
                 headers: {
-                  "Content-Type": "application/json"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
                     ids
@@ -152,26 +152,45 @@ ${names.join(',\n')}?
                         {data ? <Table>
                                 <thead>
                                     <tr>
-                                        <th><input type="checkbox" checked={allChecked} onChange={toggleAll}/></th>
-                                        <th><Text as="span">Name</Text></th>
                                         <th>
-                                            <button onClick={deleteSelectedSubscriptions}><Text as="span">Delete</Text>
-                                            </button>
+                                            <Box my={2}>
+                                                <input type="checkbox" checked={allChecked} onChange={toggleAll}/>
+                                            </Box>
+                                        </th>
+                                        <th>
+                                            <Box my={2}>
+                                                <Text as="span">Name</Text>
+                                            </Box>
+                                        </th>
+                                        <th>
+                                            <Box my={2}>
+                                                <button onClick={deleteSelectedSubscriptions}><Text as="span">Delete</Text>
+                                                </button>
+                                            </Box>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {data.items.map(subscription => (
                                         <tr key={subscription.id}>
-                                            <td><input type="checkbox" value={subscription.id} onChange={onToggleCheckbox}
-                                                       checked={!!deleteIds[subscription.id]}/></td>
                                             <td>
-                                                <Text as="span">{subscription.snippet.title}</Text>
+                                                <Box my={2}>
+                                                    <input type="checkbox" value={subscription.id}
+                                                           onChange={onToggleCheckbox}
+                                                           checked={!!deleteIds[subscription.id]}/>
+                                                </Box>
                                             </td>
                                             <td>
-                                                <button onClick={deleteSubscription(subscription.id)}>
-                                                    <Text as="span">Delete</Text>
-                                                </button>
+                                                <Box my={2}>
+                                                    <Text as="span">{subscription.snippet.title}</Text>
+                                                </Box>
+                                            </td>
+                                            <td>
+                                                <Box my={2}>
+                                                    <button onClick={deleteSubscription(subscription.id)}>
+                                                        <Text as="span">Delete</Text>
+                                                    </button>
+                                                </Box>
                                             </td>
                                         </tr>
                                     ))}

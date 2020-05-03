@@ -1,11 +1,12 @@
 import React, {FC} from "react";
 import {GetServerSideProps} from "next";
-import google from "googleapis";
-import {OAuth2Client} from "google-auth-library";
-import {oauth2} from "googleapis/build/src/apis/oauth2";
 import {getOAuth2Client} from "../services/backend/oauth";
+import Layout from "../layouts/Layout";
+import Link from "next/link";
+import Head from "next/head";
+import Box from "../components/Box";
 
-export const getServerSideProps: GetServerSideProps<{googleLoginUrl: string}> = async context => {
+export const getServerSideProps: GetServerSideProps<{ googleLoginUrl: string }> = async context => {
     const oAuth2Client = getOAuth2Client();
 
     const authorizeUrl = oAuth2Client.generateAuthUrl({
@@ -14,7 +15,7 @@ export const getServerSideProps: GetServerSideProps<{googleLoginUrl: string}> = 
 
     return {
         props: {
-         googleLoginUrl: authorizeUrl
+            googleLoginUrl: authorizeUrl
         }
     }
 }
@@ -25,7 +26,20 @@ export interface HomeProps {
 
 const Home: FC<HomeProps> = ({googleLoginUrl}) => {
     return (
-        <a href={googleLoginUrl}>Log in with Google</a>
+        <>
+            <Head>
+                <title>Peer-to-peer | Home</title>
+            </Head>
+            <Layout>
+                <Layout.SiteName/>
+                <Layout.PageTitle title="Home"/>
+                <Layout.Content>
+                    <Box variant="container">
+                        <a href={googleLoginUrl}>Log in with Google</a>
+                    </Box>
+                </Layout.Content>
+            </Layout>
+        </>
     );
 };
 

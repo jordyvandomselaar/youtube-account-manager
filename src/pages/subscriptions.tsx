@@ -12,12 +12,6 @@ export interface SubscriptionsProps {
 
 }
 
-export const getServerSideProps: GetServerSideProps = async context => {
-    return {
-        props: {}
-    }
-}
-
 const Table = styled.table`
   text-align: left;
   width: 100%;

@@ -4,6 +4,7 @@ import Text from "../components/Text";
 import Flex from "../components/Flex";
 import Box from "../components/Box";
 import Head from "next/head";
+import Link from "next/link";
 
 export interface LayoutProps {
 
@@ -15,7 +16,8 @@ const Layout: FC<LayoutProps> & {
     Content: FC
 } = ({children}) => {
     return (
-        <Grid height="100%" gridTemplateColumns="repeat(3, 1fr)" gridTemplateRows="63px 1fr" display="grid">
+        <Grid height="100%" gridTemplateColumns="repeat(3, 1fr)" gridTemplateRows={[, "63px 1fr"]} display="grid"
+              gridAutoRows={["min-content", false]}>
             {children}
         </Grid>
     );
@@ -23,10 +25,18 @@ const Layout: FC<LayoutProps> & {
 
 
 Layout.SiteName = () => (
-    <Grid gridColumn={1} gridRow={1}>
-        <Box height="100%" ml={3}>
-            <Flex flexDirection="row" alignItems="center">
-                <Text as="span" variant="appName">Youtube Account Manager</Text>
+    <Grid gridColumn={["1/span 3", 1]} gridRow={1}>
+        <Box height="100%" ml={[0, 3]} mb={[4, 0]} mt={[3, 0]}>
+            <Flex flexDirection="row" alignItems="center"
+                  justifyContent={["center", "flex-start"]}
+            >
+                <Link href="/">
+                    <Text
+                        as="a"
+                        href="/"
+                        variant="appName">Youtube Account Manager
+                    </Text>
+                </Link>
             </Flex>
         </Box>
     </Grid>
@@ -37,7 +47,7 @@ Layout.PageTitle = ({title}) => (
         <Head>
             <title>Youtube Account Manager | {title}</title>
         </Head>
-        <Grid gridColumn={2} gridRow={1}>
+        <Grid gridColumn={2} gridRow={[2, 1]}>
             <Flex justifySelf="center">
                 <Box height="100%">
                     <Flex flexDirection="row" alignItems="center" justifyContent="center">
@@ -50,7 +60,7 @@ Layout.PageTitle = ({title}) => (
 )
 
 Layout.Content = ({children}) => (
-    <Grid gridRow={2} gridColumn="1 / span 3">
+    <Grid gridRow={[3, 2]} gridColumn="1 / span 3">
         <Box pt="50px">
             {children}
         </Box>

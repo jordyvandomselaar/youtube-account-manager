@@ -5,7 +5,7 @@ import AppWrapper from "../components/AppWrapper";
 
 const theme = {
     colors: {
-        primary: '#0070f3',
+        primary: '#292929',
     },
     fonts: {
         primary: "Jost,sans-serif"

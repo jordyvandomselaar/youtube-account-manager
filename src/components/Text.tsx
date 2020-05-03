@@ -16,16 +16,21 @@ ${variant({
     variants: {
         appName: {
             fontFamily: "primary",
-            fontSize: "1.5rem"
+            fontSize: "1.5rem",
+            textDecoration: "none",
+            color: "primary"
         },
         h1: {
-            fontFamily: "primary"
+            fontFamily: "primary",
+            color: "primary"
         },
         h2: {
-            fontFamily: "primary"
+            fontFamily: "primary",
+            color: "primary"
         },
         p: {
-            fontFamily: "primary"
+            fontFamily: "primary",
+            color: "primary"
         }
     }
 })}

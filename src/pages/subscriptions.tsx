@@ -58,7 +58,7 @@ const Subscriptions: FC<SubscriptionsProps> = () => {
     }, [setDeleteIds])
 
     const allChecked = useMemo(() => {
-        if(!data) {
+        if (!data) {
             return false;
         }
 
@@ -90,18 +90,27 @@ const Subscriptions: FC<SubscriptionsProps> = () => {
         setDeleteIds({});
     }
 
-    const deleteSubscription = useCallback(
-        (id: string) => () => {
-            const name = data.items.find(item => item.id === id).snippet.title;
+    const deleteSubscriptions = useCallback(
+        (ids: string[]) => {
+            const names = data.items.filter(
+                item => ids.includes(item.id)
+            ).map(item => item.snippet.title);
 
-            alert(`Deleting ${name}`);
+            const message = `Are you sure you'd like to delete:
+            
+${names.join(',\n')}?
+`
+
+            window.confirm(message);
         }
-    , []);
+        , [data]);
+
+    const deleteSubscription = useCallback(
+        (id: string) => () => deleteSubscriptions([id])
+        , []);
 
     const deleteSelectedSubscriptions = useCallback(
-        () => {
-            alert(`Deleting all selected subscriptions`);
-        }
+        () => deleteSubscriptions(Object.keys(deleteIds))
         , [deleteIds]);
 
     if (error) {
@@ -139,7 +148,10 @@ const Subscriptions: FC<SubscriptionsProps> = () => {
                                     <tr>
                                         <th><input type="checkbox" checked={allChecked} onChange={toggleAll}/></th>
                                         <th><Text as="span">Name</Text></th>
-                                        <th><button onClick={deleteSelectedSubscriptions}><Text as="span">Delete</Text></button></th>
+                                        <th>
+                                            <button onClick={deleteSelectedSubscriptions}><Text as="span">Delete</Text>
+                                            </button>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>

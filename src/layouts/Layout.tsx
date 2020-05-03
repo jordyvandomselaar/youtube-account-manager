@@ -24,7 +24,11 @@ const Layout: FC<LayoutProps> & {
 
 Layout.SiteName = () => (
     <Grid gridColumn={1} gridRow={1}>
-        <Text as="span" variant="appName">Youtube Account Manager</Text>
+        <Box height="100%">
+            <Flex flexDirection="row" alignItems="center" justifyContent="center">
+                <Text as="span" variant="appName">Youtube Account Manager</Text>
+            </Flex>
+        </Box>
     </Grid>
 )
 
@@ -35,7 +39,11 @@ Layout.PageTitle = ({title}) => (
         </Head>
         <Grid gridColumn={2} gridRow={1}>
             <Flex justifySelf="center">
-                <Text textAlign="center" variant="h1" as="h1">{title}</Text>
+                <Box height="100%">
+                    <Flex flexDirection="row" alignItems="center" justifyContent="center">
+                        <Text m={0} variant="h1" as="h1">{title}</Text>
+                    </Flex>
+                </Box>
             </Flex>
         </Grid>
     </>

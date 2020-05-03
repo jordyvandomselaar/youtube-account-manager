@@ -24,8 +24,8 @@ const Layout: FC<LayoutProps> & {
 
 Layout.SiteName = () => (
     <Grid gridColumn={1} gridRow={1}>
-        <Box height="100%">
-            <Flex flexDirection="row" alignItems="center" justifyContent="center">
+        <Box height="100%" ml={3}>
+            <Flex flexDirection="row" alignItems="center">
                 <Text as="span" variant="appName">Youtube Account Manager</Text>
             </Flex>
         </Box>

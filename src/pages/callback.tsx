@@ -4,6 +4,7 @@ import {getOAuth2Client} from "../services/backend/oauth";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import cookie from "cookie";
+import Text from "../components/Text";
 
 export const getServerSideProps: GetServerSideProps<{
     success: boolean,
@@ -45,7 +46,7 @@ const Callback: FC<CallbackProps> = ({success}) => {
     }
 
     return (
-        <p>Tokens could not be retrieved. <Link href="/"><a href="/">Try again</a></Link></p>
+        <Text>Tokens could not be retrieved. <Link href="/"><a href="/">Try again</a></Link></Text>
     )
 };
 

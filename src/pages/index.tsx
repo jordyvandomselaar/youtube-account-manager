@@ -5,6 +5,7 @@ import Layout from "../layouts/Layout";
 import Link from "next/link";
 import Head from "next/head";
 import Box from "../components/Box";
+import Text from "../components/Text";
 
 export const getServerSideProps: GetServerSideProps<{ googleLoginUrl: string }> = async context => {
     const oAuth2Client = getOAuth2Client();
@@ -28,14 +29,14 @@ const Home: FC<HomeProps> = ({googleLoginUrl}) => {
     return (
         <>
             <Head>
-                <title>Peer-to-peer | Home</title>
+                <title>Youtube Account Manager | Home</title>
             </Head>
             <Layout>
                 <Layout.SiteName/>
                 <Layout.PageTitle title="Home"/>
                 <Layout.Content>
                     <Box variant="container">
-                        <a href={googleLoginUrl}>Log in with Google</a>
+                        <a href={googleLoginUrl}><Text as="span">Log in with Google</Text></a>
                     </Box>
                 </Layout.Content>
             </Layout>

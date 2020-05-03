@@ -2,7 +2,6 @@ import React, {FC} from "react";
 import Grid from "../components/Grid";
 import Text from "../components/Text";
 import Flex from "../components/Flex";
-import AppWrapper from "../components/AppWrapper";
 import Box from "../components/Box";
 import Head from "next/head";
 
@@ -12,22 +11,20 @@ export interface LayoutProps {
 
 const Layout: FC<LayoutProps> & {
     SiteName: FC,
-    PageTitle: FC<{title: string}>,
+    PageTitle: FC<{ title: string }>,
     Content: FC
 } = ({children}) => {
     return (
-        <AppWrapper>
-            <Grid height="100%" gridTemplateColumns="repeat(3, 1fr)" gridTemplateRows="63px 1fr" display="grid">
-                {children}
-            </Grid>
-        </AppWrapper>
+        <Grid height="100%" gridTemplateColumns="repeat(3, 1fr)" gridTemplateRows="63px 1fr" display="grid">
+            {children}
+        </Grid>
     );
 };
 
 
 Layout.SiteName = () => (
     <Grid gridColumn={1} gridRow={1}>
-        <Text variant="appName">Youtube Account Manager</Text>
+        <Text as="span" variant="appName">Youtube Account Manager</Text>
     </Grid>
 )
 

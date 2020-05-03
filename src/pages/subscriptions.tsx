@@ -92,7 +92,9 @@ const Subscriptions: FC<SubscriptionsProps> = () => {
 
     const deleteSubscription = useCallback(
         (id: string) => () => {
-            alert(`Deleting ${id}`);
+            const name = data.items.find(item => item.id === id).snippet.title;
+
+            alert(`Deleting ${name}`);
         }
     , []);
 

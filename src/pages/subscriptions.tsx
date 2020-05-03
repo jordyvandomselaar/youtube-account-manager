@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useCallback, useMemo, useState} from "react";
+import React, {ChangeEvent, FC, useState} from "react";
 import useSWR from "swr";
 import {GetServerSideProps} from "next";
 import fetcher from "../services/shared/fetcher";
@@ -35,7 +35,7 @@ const Subscriptions: FC<SubscriptionsProps> = () => {
 
     const [deleteIds, setDeleteIds] = useState({});
 
-    const onToggleCheckbox = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const onToggleCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
         const checked = e.currentTarget.checked;
         const value = e.currentTarget.value;
 
@@ -55,15 +55,9 @@ const Subscriptions: FC<SubscriptionsProps> = () => {
 
             return clone;
         });
-    }, [setDeleteIds])
+    }
 
-    const allChecked = useMemo(() => {
-        if (!data) {
-            return false;
-        }
-
-        return data.items.length === Object.values(deleteIds).length;
-    }, [data, deleteIds]);
+    const allChecked = data && data.items.length === Object.values(deleteIds).length;
 
     const toggleAll = (e: ChangeEvent<HTMLInputElement>) => {
         if (!data) {
@@ -90,28 +84,21 @@ const Subscriptions: FC<SubscriptionsProps> = () => {
         setDeleteIds({});
     }
 
-    const deleteSubscriptions = useCallback(
-        (ids: string[]) => {
-            const names = data.items.filter(
-                item => ids.includes(item.id)
-            ).map(item => item.snippet.title);
+    const deleteSubscriptions = (ids: string[]) => {
+        const names = data.items.filter(
+            item => ids.includes(item.id)
+        ).map(item => item.snippet.title);
 
-            const message = `Are you sure you'd like to delete:
+        const message = `Are you sure you'd like to delete:
             
 ${names.join(',\n')}?
 `
 
-            window.confirm(message);
-        }
-        , [data]);
+        window.confirm(message);
+    };
 
-    const deleteSubscription = useCallback(
-        (id: string) => () => deleteSubscriptions([id])
-        , []);
-
-    const deleteSelectedSubscriptions = useCallback(
-        () => deleteSubscriptions(Object.keys(deleteIds))
-        , [deleteIds]);
+    const deleteSubscription = (id: string) => () => deleteSubscriptions([id]);
+    const deleteSelectedSubscriptions = () => deleteSubscriptions(Object.keys(deleteIds));
 
     if (error) {
         return (

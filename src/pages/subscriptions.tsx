@@ -104,7 +104,10 @@ ${names.join(',\n')}?
                     ids
                 }),
             }).then(() => {
-                alert("Subscriptions removed. Youtube takes a little time to process so give it a few minutes to update.")
+                alert("Subscriptions removed. Youtube takes a little time to process so give it a few minutes to update.");
+                setDeleteIds({});
+            }).catch(() => {
+                alert("Something went wrong. It usually works again if you wait a few minutes! It could be that the subscription was already deleted.");
             });
 
             let updatedSubscriptions = data.items.filter(item => !ids.includes(item.id));

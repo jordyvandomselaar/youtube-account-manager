@@ -1,13 +1,12 @@
 import React, {FC} from "react";
-import {GetServerSideProps} from "next";
+import {GetStaticProps} from "next";
 import {getOAuth2Client} from "../services/backend/oauth";
 import Layout from "../layouts/Layout";
-import Link from "next/link";
 import Head from "next/head";
 import Box from "../components/Box";
 import Text from "../components/Text";
 
-export const getServerSideProps: GetServerSideProps<{ googleLoginUrl: string }> = async context => {
+export const getStaticProps: GetStaticProps<{ googleLoginUrl: string }> = async context => {
     const oAuth2Client = getOAuth2Client();
 
     const authorizeUrl = oAuth2Client.generateAuthUrl({

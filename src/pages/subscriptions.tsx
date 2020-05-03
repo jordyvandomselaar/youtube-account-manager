@@ -175,14 +175,18 @@ ${names.join(',\n')}?
                                         <tr key={subscription.id}>
                                             <td>
                                                 <Box my={2}>
-                                                    <input type="checkbox" value={subscription.id}
+                                                    <input type="checkbox"
+                                                           id={`checkbox-${subscription.id}`}
+                                                           value={subscription.id}
                                                            onChange={onToggleCheckbox}
                                                            checked={!!deleteIds[subscription.id]}/>
                                                 </Box>
                                             </td>
                                             <td>
                                                 <Box my={2}>
-                                                    <Text as="span">{subscription.snippet.title}</Text>
+                                                    <label htmlFor={`checkbox-${subscription.id}`}>
+                                                        <Text as="span">{subscription.snippet.title}</Text>
+                                                    </label>
                                                 </Box>
                                             </td>
                                             <td>

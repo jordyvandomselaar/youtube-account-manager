@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FC, useState} from "react";
 import useSWR from "swr";
 import {GetServerSideProps} from "next";
-import fetcher from "../services/shared/fetcher";
+import fetcher, {fetch} from "../services/shared/fetcher";
 import Head from "next/head";
 import Layout from "../layouts/Layout";
 import Box from "../components/Box";
@@ -24,7 +24,7 @@ const Table = styled.table`
 `
 
 const Subscriptions: FC<SubscriptionsProps> = () => {
-    const {data, error} = useSWR<{
+    const {data, error, mutate} = useSWR<{
         items: {
             id: string;
             snippet: {
@@ -94,7 +94,23 @@ const Subscriptions: FC<SubscriptionsProps> = () => {
 ${names.join(',\n')}?
 `
 
-        window.confirm(message);
+        if (window.confirm(message)) {
+            fetch("/api/subscriptions/delete", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ids
+                }),
+            }).then(() => {
+                alert("Subscriptions removed. Youtube takes a little time to process so give it a few minutes to update.")
+            });
+
+            let updatedSubscriptions = data.items.filter(item => !ids.includes(item.id));
+
+            mutate({items: updatedSubscriptions});
+        }
     };
 
     const deleteSubscription = (id: string) => () => deleteSubscriptions([id]);

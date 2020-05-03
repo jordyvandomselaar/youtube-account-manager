@@ -1,6 +1,7 @@
 import {Credentials, OAuth2Client} from "google-auth-library";
 import {loadTokens} from "./tokens";
 import cookie from "cookie"
+import {google, youtube_v3} from "googleapis";
 
 export const getOAuth2Client = () => new OAuth2Client(
     process.env.GOOGLE_CLIENT_ID,

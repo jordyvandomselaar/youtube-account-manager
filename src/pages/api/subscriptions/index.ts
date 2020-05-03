@@ -1,5 +1,5 @@
 import {NextApiRequest, NextApiResponse} from "next";
-import {getAuthenticatedOAuth2Client} from "../../services/backend/oauth";
+import {getAuthenticatedOAuth2Client} from "../../../services/backend/oauth";
 import {google, youtube_v3} from "googleapis";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

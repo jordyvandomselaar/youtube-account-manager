@@ -33,6 +33,7 @@ const Home: FC<HomeProps> = ({googleLoginUrl}) => {
             <Layout>
                 <Layout.SiteName/>
                 <Layout.PageTitle title="Home"/>
+                <Layout.Actions />
                 <Layout.Content>
                     <Box variant="container">
                         <a href={googleLoginUrl}><Text as="span">Log in with Google</Text></a>

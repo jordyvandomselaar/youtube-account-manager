@@ -196,6 +196,7 @@ ${names.join(',\n')}?
                 <Layout>
                     <Layout.SiteName/>
                     <Layout.PageTitle title="Subscriptions"/>
+                    <Layout.Actions />
                     <Layout.Content>
                         <Box variant="container">
                             <Text>Something went wrong.</Text>
@@ -214,6 +215,7 @@ ${names.join(',\n')}?
             <Layout>
                 <Layout.SiteName/>
                 <Layout.PageTitle title="Subscriptions"/>
+                <Layout.Actions />
                 <Layout.Content>
                     <Box variant="container">
                         <Table>

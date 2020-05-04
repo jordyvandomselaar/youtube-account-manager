@@ -86,7 +86,7 @@ ${names.join(',\n')}?
         });
     }
 
-    const {pages, isLoadingMore, loadMore, pageSWRs, isReachingEnd} = useSWRPages<string, APIResponse>(
+    const {pages, isLoadingMore, loadMore, pageSWRs, isReachingEnd, isEmpty} = useSWRPages<string, APIResponse>(
         "/api/subscriptions",
         ({offset, withSWR}) => {
             const url = `/api/subscriptions?pageToken=${offset ?? ''}`;
@@ -196,7 +196,7 @@ ${names.join(',\n')}?
                 <Layout>
                     <Layout.SiteName/>
                     <Layout.PageTitle title="Subscriptions"/>
-                    <Layout.Actions />
+                    <Layout.Actions/>
                     <Layout.Content>
                         <Box variant="container">
                             <Text>Something went wrong.</Text>
@@ -215,7 +215,7 @@ ${names.join(',\n')}?
             <Layout>
                 <Layout.SiteName/>
                 <Layout.PageTitle title="Subscriptions"/>
-                <Layout.Actions />
+                <Layout.Actions/>
                 <Layout.Content>
                     <Box variant="container">
                         <Table>
@@ -244,11 +244,11 @@ ${names.join(',\n')}?
                             </tbody>
                         </Table>
                         {
-                            isReachingEnd
-                                ? <Text>Done loading all subscriptions.</Text>
-                                : isLoadingMore
-                                ? <Text>Loading more…</Text>
-                                : <button onClick={loadMore} ref={ref}>Load more</button>
+                            isEmpty
+                                ? <Text>You're not subscribed to any channels yet =(</Text>
+                                : isReachingEnd ? <Text>Done loading all subscriptions.</Text>
+                                : isLoadingMore ? <Text>Loading more…</Text>
+                                    : <button onClick={loadMore} ref={ref}>Load more</button>
                         }
                     </Box>
                 </Layout.Content>

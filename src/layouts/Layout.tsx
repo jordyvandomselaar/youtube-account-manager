@@ -5,6 +5,7 @@ import Flex from "../components/Flex";
 import Box from "../components/Box";
 import Head from "next/head";
 import Link from "next/link";
+import {useRouter} from "next/router";
 
 export interface LayoutProps {
 
@@ -43,33 +44,47 @@ Layout.SiteName = () => (
     </Grid>
 )
 
-Layout.Actions = () => (
-    <Grid gridColumn={["1/span 3", 3]} gridRow={[2, 1]}>
-        <Box height="100%" mr={[0, 3]} mb={[4, 0]}>
-            <Flex flexDirection="row" alignItems="center"
-                  justifyContent={["center", "flex-end"]}
-            >
-                <Box pr={2}>
-                    <Link href="/">
-                        <Text
-                            as="a"
-                            href="/">Home
-                        </Text>
-                    </Link>
-                </Box>
+Layout.Actions = () => {
+    const loggedIn = typeof window !== "undefined" && !!window.localStorage.getItem("loggedIn");
 
-                <Box>
-                    <Link href="/privacy-statement">
-                        <Text
-                            as="a"
-                            href="/privacy-statement">Privacy Statement
-                        </Text>
-                    </Link>
-                </Box>
-            </Flex>
-        </Box>
-    </Grid>
-)
+    return (
+        <Grid gridColumn={["1/span 3", 3]} gridRow={[2, 1]}>
+            <Box height="100%" mr={[0, 3]} mb={[4, 0]}>
+                <Flex flexDirection="row" alignItems="center"
+                      justifyContent={["center", "flex-end"]}
+                >
+                    <Box pr={2}>
+                        <Link href="/">
+                            <Text
+                                as="a"
+                                href="/">Home
+                            </Text>
+                        </Link>
+                    </Box>
+                    {loggedIn && (
+                        <Box pr={2}>
+                            <Link href="/subscriptions">
+                                <Text
+                                    as="a"
+                                    href="/subscriptions">Subscriptions
+                                </Text>
+                            </Link>
+                        </Box>
+
+                    )}
+                    <Box>
+                        <Link href="/privacy-statement">
+                            <Text
+                                as="a"
+                                href="/privacy-statement">Privacy Statement
+                            </Text>
+                        </Link>
+                    </Box>
+                </Flex>
+            </Box>
+        </Grid>
+    );
+}
 
 Layout.PageTitle = ({title}) => (
     <>

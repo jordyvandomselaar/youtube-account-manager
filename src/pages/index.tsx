@@ -36,7 +36,7 @@ const Home: FC<HomeProps> = ({googleLoginUrl}) => {
                 <Layout.Actions />
                 <Layout.Content>
                     <Box variant="container">
-                        <a href={googleLoginUrl}><Text as="span">Log in with Google</Text></a>
+                        <Text>Welcome to Youtube Account Manager! Using this app, you can unsubscribe from channels in bulk. To get started, <a href={googleLoginUrl}><Text as="span">Log in with Google</Text></a>.</Text>
                     </Box>
                 </Layout.Content>
             </Layout>

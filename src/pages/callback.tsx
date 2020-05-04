@@ -35,8 +35,12 @@ const Callback: FC<CallbackProps> = ({success}) => {
 
     useEffect(() => {
         if(!success) {
+            window.localStorage.removeItem("loggedIn");
+
             return;
         }
+
+        window.localStorage.setItem("loggedIn", "true");
 
         router.push("/subscriptions");
     }, [success])

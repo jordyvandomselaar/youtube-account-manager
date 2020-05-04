@@ -14,8 +14,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         pageToken: pageToken
     })
 
-    console.log(list.data.items.length, list.data.nextPageToken, list.data.prevPageToken)
-
     res.json({
         items: list.data.items,
         nextPageToken: list.data.nextPageToken,

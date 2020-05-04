@@ -5,6 +5,7 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import cookie from "cookie";
 import Text from "../components/Text";
+import {LoggedInProps} from "../hooks/useLoggedIn";
 
 export const getServerSideProps: GetServerSideProps<{
     success: boolean,
@@ -26,21 +27,25 @@ export const getServerSideProps: GetServerSideProps<{
 }
 
 
-export interface CallbackProps {
+export interface CallbackProps extends LoggedInProps{
     success: boolean
 }
 
-const Callback: FC<CallbackProps> = ({success}) => {
+const Callback: FC<CallbackProps> = ({success, loggedInDispatch}) => {
     const router = useRouter();
 
     useEffect(() => {
         if(!success) {
-            window.localStorage.removeItem("loggedIn");
+            loggedInDispatch({
+                type: "LOGOUT"
+            });
 
             return;
         }
 
-        window.localStorage.setItem("loggedIn", "true");
+        loggedInDispatch({
+            type: "LOGIN"
+        });
 
         router.push("/subscriptions");
     }, [success])

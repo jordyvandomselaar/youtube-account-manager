@@ -3,12 +3,11 @@ import Head from "next/head";
 import Layout from "../layouts/Layout";
 import Box from "../components/Box";
 import Text from "../components/Text";
+import {LoggedInProps} from "../hooks/useLoggedIn";
 
-export interface PrivacyStatementProps {
+export interface PrivacyStatementProps extends LoggedInProps{}
 
-}
-
-const Contact: FC<PrivacyStatementProps> = () => {
+const Contact: FC<PrivacyStatementProps> = ({loggedIn}) => {
     return (
         <>
             <Head>
@@ -17,7 +16,7 @@ const Contact: FC<PrivacyStatementProps> = () => {
             <Layout>
                 <Layout.SiteName/>
                 <Layout.PageTitle title="Contact"/>
-                <Layout.Actions />
+                <Layout.Actions loggedIn={loggedIn}/>
                 <Layout.Content>
                     <Box variant="container">
                         <Text>Hi there! I (Jordy van Domselaar) built this because I wanted to unsubscribe from many channels at once. Doing it one by one is a really big chore and to be honest, who likes chores?</Text>

@@ -5,17 +5,15 @@ import Flex from "../components/Flex";
 import Box from "../components/Box";
 import Head from "next/head";
 import Link from "next/link";
-import {useRouter} from "next/router";
 
 export interface LayoutProps {
-
 }
 
 const Layout: FC<LayoutProps> & {
     SiteName: FC,
     PageTitle: FC<{ title: string }>,
     Content: FC,
-    Actions: FC
+    Actions: FC<{loggedIn: boolean}>,
 } = ({children}) => {
     return (
         <Grid height="100%" gridTemplateColumns="repeat(3, 1fr)" gridTemplateRows={[, "63px 1fr"]} display="grid"
@@ -44,9 +42,7 @@ Layout.SiteName = () => (
     </Grid>
 )
 
-Layout.Actions = () => {
-    const loggedIn = typeof window !== "undefined" && !!window.localStorage.getItem("loggedIn");
-
+Layout.Actions = ({loggedIn}) => {
     return (
         <Grid gridColumn={["1/span 3", 3]} gridRow={[2, 1]}>
             <Box height="100%" mr={[0, 3]} mb={[4, 0]}>
@@ -84,7 +80,7 @@ Layout.Actions = () => {
                         <Link href="/privacy-statement">
                             <Text
                                 as="a"
-                                href="/privacy-statement">Privacy Statement
+                                href="/privacy-statement">Privacy
                             </Text>
                         </Link>
                     </Box>

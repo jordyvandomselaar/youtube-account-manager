@@ -5,6 +5,7 @@ import Layout from "../layouts/Layout";
 import Head from "next/head";
 import Box from "../components/Box";
 import Text from "../components/Text";
+import {LoggedInProps} from "../hooks/useLoggedIn";
 
 export const getStaticProps: GetStaticProps<{ googleLoginUrl: string }> = async context => {
     const oAuth2Client = getOAuth2Client();
@@ -20,11 +21,11 @@ export const getStaticProps: GetStaticProps<{ googleLoginUrl: string }> = async 
     }
 }
 
-export interface HomeProps {
+export interface HomeProps extends LoggedInProps{
     googleLoginUrl: string;
 }
 
-const Home: FC<HomeProps> = ({googleLoginUrl}) => {
+const Home: FC<HomeProps> = ({googleLoginUrl, loggedIn}) => {
     return (
         <>
             <Head>
@@ -33,7 +34,7 @@ const Home: FC<HomeProps> = ({googleLoginUrl}) => {
             <Layout>
                 <Layout.SiteName/>
                 <Layout.PageTitle title="Home"/>
-                <Layout.Actions />
+                <Layout.Actions loggedIn={loggedIn} />
                 <Layout.Content>
                     <Box variant="container">
                         <Text>Welcome to Youtube Account Manager! Using this app, you can unsubscribe from channels in bulk. To get started, <a href={googleLoginUrl}><Text as="span">Log in with Google</Text></a>.</Text>

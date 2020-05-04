@@ -7,8 +7,10 @@ import Box from "../components/Box";
 import Text from "../components/Text";
 import styled from "styled-components";
 import {useInView} from "react-intersection-observer";
+import {LoggedInProps} from "../hooks/useLoggedIn";
+import Link from "next/link";
 
-export interface SubscriptionsProps {
+export interface SubscriptionsProps extends LoggedInProps {
 
 }
 
@@ -16,6 +18,25 @@ const Table = styled.table`
   text-align: left;
   width: 100%;
 `
+
+class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
+    constructor(props) {
+        super(props);
+        this.state = {hasError: false};
+    }
+
+    static getDerivedStateFromError() {
+        return {hasError: true};
+    }
+
+    render() {
+        if (this.state.hasError) {
+            return <Text>Something went wrong. Please <Link href="/"><a href="/">Try again</a></Link>.</Text>;
+        }
+
+        return this.props.children;
+    }
+}
 
 interface Subscription {
     id: string;
@@ -30,7 +51,7 @@ interface APIResponse {
     previousPageToken?: string
 }
 
-const Subscriptions: FC<SubscriptionsProps> = () => {
+const Subscriptions: FC<SubscriptionsProps> = ({loggedIn}) => {
     const [ref, inView] = useInView({threshold: 0});
     const [loadedSubscriptions, setLoadedSubscriptions] = useState<Subscription[]>([]);
     const [deleteIds, setDeleteIds] = useState({});
@@ -94,7 +115,7 @@ ${names.join(',\n')}?
             const {data, error} = withSWR(useSWR(url, fetcher));
 
             if (error) {
-                return error;
+                throw error;
             }
 
             if (!data) {
@@ -186,27 +207,6 @@ ${names.join(',\n')}?
 
     const deleteSelectedSubscriptions = () => deleteSubscriptions(Object.keys(deleteIds));
 
-
-    if (pages instanceof Error) {
-        return (
-            <>
-                <Head>
-                    <title>Youtube Account Manager | Subscriptions</title>
-                </Head>
-                <Layout>
-                    <Layout.SiteName/>
-                    <Layout.PageTitle title="Subscriptions"/>
-                    <Layout.Actions/>
-                    <Layout.Content>
-                        <Box variant="container">
-                            <Text>Something went wrong.</Text>
-                        </Box>
-                    </Layout.Content>
-                </Layout>
-            </>
-        )
-    }
-
     return (
         <>
             <Head>
@@ -215,41 +215,44 @@ ${names.join(',\n')}?
             <Layout>
                 <Layout.SiteName/>
                 <Layout.PageTitle title="Subscriptions"/>
-                <Layout.Actions/>
+                <Layout.Actions loggedIn={loggedIn}/>
                 <Layout.Content>
                     <Box variant="container">
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <Box my={2}>
-                                            <input type="checkbox" checked={allChecked} onChange={toggleAll}/>
-                                        </Box>
-                                    </th>
-                                    <th>
-                                        <Box my={2}>
-                                            <Text as="span">Name</Text>
-                                        </Box>
-                                    </th>
-                                    <th>
-                                        <Box my={2}>
-                                            <button onClick={deleteSelectedSubscriptions}><Text as="span">Delete</Text>
-                                            </button>
-                                        </Box>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {pages instanceof Array && pages}
-                            </tbody>
-                        </Table>
-                        {
-                            isEmpty
-                                ? <Text>You're not subscribed to any channels yet =(</Text>
-                                : isReachingEnd ? <Text>Done loading all subscriptions.</Text>
-                                : isLoadingMore ? <Text>Loading more…</Text>
-                                    : <button onClick={loadMore} ref={ref}>Load more</button>
-                        }
+                        <ErrorBoundary>
+                            <Table>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <Box my={2}>
+                                                <input type="checkbox" checked={allChecked} onChange={toggleAll}/>
+                                            </Box>
+                                        </th>
+                                        <th>
+                                            <Box my={2}>
+                                                <Text as="span">Name</Text>
+                                            </Box>
+                                        </th>
+                                        <th>
+                                            <Box my={2}>
+                                                <button onClick={deleteSelectedSubscriptions}><Text
+                                                    as="span">Delete</Text>
+                                                </button>
+                                            </Box>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {pages instanceof Array && pages}
+                                </tbody>
+                            </Table>
+                            {
+                                isEmpty
+                                    ? <Text>You're not subscribed to any channels yet =(</Text>
+                                    : isReachingEnd ? <Text>Done loading all subscriptions.</Text>
+                                    : isLoadingMore ? <Text>Loading more…</Text>
+                                        : <button onClick={loadMore} ref={ref}>Load more</button>
+                            }
+                        </ErrorBoundary>
                     </Box>
                 </Layout.Content>
             </Layout>

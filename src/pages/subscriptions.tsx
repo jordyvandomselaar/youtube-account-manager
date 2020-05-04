@@ -9,6 +9,7 @@ import styled from "styled-components";
 import {useInView} from "react-intersection-observer";
 import {LoggedInProps} from "../hooks/useLoggedIn";
 import Link from "next/link";
+import Flex from "../components/Flex";
 
 export interface SubscriptionsProps extends LoggedInProps {
 
@@ -142,9 +143,11 @@ ${names.join(',\n')}?
                     </td>
                     <td>
                         <Box my={2}>
-                            <button onClick={deleteSubscription(subscription.id)}>
-                                <Text as="span">Delete</Text>
-                            </button>
+                            <Flex flexDirection="row" justifyContent="flex-end">
+                                <button onClick={deleteSubscription(subscription.id)}>
+                                    <Text as="span">Delete</Text>
+                                </button>
+                            </Flex>
                         </Box>
                     </td>
                 </tr>
@@ -236,9 +239,11 @@ ${names.join(',\n')}?
                                         </th>
                                         <th>
                                             <Box my={2}>
-                                                <button onClick={deleteSelectedSubscriptions}><Text
-                                                    as="span">Delete</Text>
-                                                </button>
+                                                <Flex flexDirection="row" justifyContent="flex-end">
+                                                    <button onClick={deleteSelectedSubscriptions}><Text
+                                                        as="span">Delete</Text>
+                                                    </button>
+                                                </Flex>
                                             </Box>
                                         </th>
                                     </tr>

@@ -72,6 +72,14 @@ Layout.Actions = () => {
                         </Box>
 
                     )}
+                    <Box pr={2}>
+                        <Link href="/contact">
+                            <Text
+                                as="a"
+                                href="/contact">Contact
+                            </Text>
+                        </Link>
+                    </Box>
                     <Box>
                         <Link href="/privacy-statement">
                             <Text

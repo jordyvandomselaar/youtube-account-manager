@@ -30,7 +30,8 @@ ${variant({
         },
         p: {
             fontFamily: "primary",
-            color: "primary"
+            color: "primary",
+            wordBreak: "break-word"
         }
     }
 })}

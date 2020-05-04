@@ -11,7 +11,7 @@ const Box = styled.div<LayoutProps & SpaceProps & ColorProps & {
   ${variant({
   variants: {
     container: {
-      px: "20%"
+      px: [4, "20%"]
     }
   }
 })}

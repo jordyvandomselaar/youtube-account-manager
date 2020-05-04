@@ -154,7 +154,9 @@ ${names.join(',\n')}?
             return SWR.data.nextPageToken ?? null;
         }),
         [
-            deleteIds
+            deleteIds,
+            deleteSubscription,
+            onToggleCheckbox
         ]
     )
 

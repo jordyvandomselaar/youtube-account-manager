@@ -252,7 +252,9 @@ ${names.join(',\n')}?
                                     ? <Text>You're not subscribed to any channels yet =(</Text>
                                     : isReachingEnd ? <Text>Done loading all subscriptions.</Text>
                                     : isLoadingMore ? <Text>Loading more…</Text>
-                                        : <button onClick={loadMore} ref={ref}>Load more</button>
+                                        : <button onClick={loadMore} ref={ref}><Text as="span">
+                                            Load more
+                                        </Text></button>
                             }
                         </ErrorBoundary>
                     </Box>

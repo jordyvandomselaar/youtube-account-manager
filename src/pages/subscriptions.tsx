@@ -108,7 +108,7 @@ ${names.join(',\n')}?
                             <input type="checkbox"
                                    id={`checkbox-${subscription.id}`}
                                    value={subscription.id}
-                                onChange={onToggleCheckbox}
+                                   onChange={onToggleCheckbox}
                                    checked={!!deleteIds[subscription.id]}/>
                         </Box>
                     </td>
@@ -144,10 +144,10 @@ ${names.join(',\n')}?
     }, [inView]);
 
 
-    useEffect(() =>{
+    useEffect(() => {
         setLoadedSubscriptions(
             pageSWRs.reduce((carrier, swr) => {
-                if(swr.data?.items) {
+                if (swr.data?.items) {
                     carrier = [...carrier, ...swr.data.items];
                 }
 
